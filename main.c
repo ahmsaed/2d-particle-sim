@@ -1,21 +1,31 @@
-#include "raylib.h"
+#include <raylib.h>
 
-int main(void)
-{
-    InitWindow(800, 450, "Particle Simulator");
+struct Particle{
+    float x;
+    float y;
+    int velocity_x;
+    int velocity_y;
+};
 
-    while (!WindowShouldClose())
-    {
+
+int main(void){
+
+    struct Particle particle;
+
+    particle.x = 400;
+    particle.y = 200;
+    particle.velocity_x = 2;
+    particle.velocity_y = -2;
+
+    InitWindow(800, 450, "2D Particle Simulator");
+
+    while(!WindowShouldClose()){
+
         BeginDrawing();
-
         ClearBackground(RAYWHITE);
-
-        DrawCircle(400, 225, 20, RED);
-
-        EndDrawing();
+        DrawCircle(particle.x,particle.y, 20, RED);
+        EndDrawing(); 
     }
-
     CloseWindow();
-
     return 0;
 }
