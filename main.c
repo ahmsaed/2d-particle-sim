@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <stdlib.h>
 
 struct Particle{
     float x;
@@ -10,27 +11,14 @@ struct Particle{
 
 int main(void){
 
-    struct Particle particle[3];
+    struct Particle particle[100];
 
-    for (int i=0; i<3; i++){
-        if (i == 1){
-            particle[i].x = 200;
-            particle[i].y = 100;
-            particle[i].velocity_y = 2;
-            particle[i].velocity_x = 2;
-        }
-        if (i==2){
-        particle[i].x = 280;
-        particle[i].y = 140;
-        particle[i].velocity_x = 1;
-        particle[i].velocity_y = -2;
-        }
-        if (i==0){
-        particle[i].x = 400;
-        particle[i].y = 200;
-        particle[i].velocity_x = 2;
-        particle[i].velocity_y = 1;
-        }
+    for (int i=0; i<100; i++){
+        particle[i].x = rand() % 800;
+        particle[i].y = rand() % 450;
+        particle[i].velocity_y = (rand() % 5) - 2;
+        particle[i].velocity_x = (rand() % 5) - 2;
+ 
     };
 
     InitWindow(800, 450, "2D Particle Simulator");
@@ -39,7 +27,7 @@ int main(void){
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        for (int i=0; i<3; i++){
+        for (int i=0; i<100; i++){
         particle[i].x += particle[i].velocity_x;
         particle[i].y += particle[i].velocity_y;
 
@@ -52,8 +40,6 @@ int main(void){
 
         DrawCircle(particle[i].x,particle[i].y, 20, RED);
 
-        DrawCircle(particle[i].x,particle[i].y, 20, RED);
-        DrawCircle(particle[i].x,particle[i].y, 20, RED);
     }
         EndDrawing(); 
     }
