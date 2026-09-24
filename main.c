@@ -10,12 +10,28 @@ struct Particle{
 
 int main(void){
 
-    struct Particle particle;
+    struct Particle particle[3];
 
-    particle.x = 400;
-    particle.y = 200;
-    particle.velocity_x = 1;
-    particle.velocity_y = 1;
+    for (int i=0; i<3; i++){
+        if (i == 1){
+            particle[i].x = 200;
+            particle[i].y = 100;
+            particle[i].velocity_y = 2;
+            particle[i].velocity_x = 2;
+        }
+        if (i==2){
+        particle[i].x = 280;
+        particle[i].y = 140;
+        particle[i].velocity_x = 1;
+        particle[i].velocity_y = -2;
+        }
+        if (i==0){
+        particle[i].x = 400;
+        particle[i].y = 200;
+        particle[i].velocity_x = 2;
+        particle[i].velocity_y = 1;
+        }
+    };
 
     InitWindow(800, 450, "2D Particle Simulator");
 
@@ -23,17 +39,22 @@ int main(void){
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        particle.x += particle.velocity_x;
-        particle.y += particle.velocity_y;
+        for (int i=0; i<3; i++){
+        particle[i].x += particle[i].velocity_x;
+        particle[i].y += particle[i].velocity_y;
 
-        if (particle.x > 800 || particle.x < 0){
-            particle.velocity_x = -particle.velocity_x;
+        if (particle[i].x > 800 || particle[i].x < 0){
+            particle[i].velocity_x = -particle[i].velocity_x;
         }
-        if (particle.y > 450 || particle.y < 0){
-            particle.velocity_y = -particle.velocity_y;
+        if (particle[i].y > 450 || particle[i].y < 0){
+            particle[i].velocity_y = -particle[i].velocity_y;
         }
 
-        DrawCircle(particle.x,particle.y, 20, RED);
+        DrawCircle(particle[i].x,particle[i].y, 20, RED);
+
+        DrawCircle(particle[i].x,particle[i].y, 20, RED);
+        DrawCircle(particle[i].x,particle[i].y, 20, RED);
+    }
         EndDrawing(); 
     }
     CloseWindow();
