@@ -43,7 +43,7 @@ int main(void){
     srand(time(NULL));
 
     struct Particle *particle = malloc(particle_count * sizeof(struct Particle));
-    struct Particle *new_part = realloc(particle, 10 * sizeof(struct Particle));
+    struct Particle *new_part = realloc(particle, 100 * sizeof(struct Particle));
 
     if (new_part== NULL){
         return 1;
@@ -57,7 +57,6 @@ int main(void){
 
     while(!WindowShouldClose()){
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-            printf("%f\n", (float)rand() / RAND_MAX - 0.5f);
             Vector2 mouse_pos = GetMousePosition();
             new_part[particle_count].x = mouse_pos.x;
             new_part[particle_count].y = mouse_pos.y;        
