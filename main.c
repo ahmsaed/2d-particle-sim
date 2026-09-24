@@ -14,8 +14,8 @@ int main(void){
 
     particle.x = 400;
     particle.y = 200;
-    particle.velocity_x = 2;
-    particle.velocity_y = -2;
+    particle.velocity_x = 1;
+    particle.velocity_y = 1;
 
     InitWindow(800, 450, "2D Particle Simulator");
 
@@ -23,6 +23,16 @@ int main(void){
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
+        particle.x += particle.velocity_x;
+        particle.y += particle.velocity_y;
+
+        if (particle.x > 800 || particle.x < 0){
+            particle.velocity_x = -particle.velocity_x;
+        }
+        if (particle.y > 450 || particle.y < 0){
+            particle.velocity_y = -particle.velocity_y;
+        }
+
         DrawCircle(particle.x,particle.y, 20, RED);
         EndDrawing(); 
     }
