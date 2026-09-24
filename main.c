@@ -1,48 +1,70 @@
 #include <raylib.h>
 #include <stdlib.h>
+#include <time.h>
+
+const int particle_count = 100;
 
 struct Particle{
     float x;
     float y;
-    int velocity_x;
-    int velocity_y;
+    float velocity_x;
+    float velocity_y;
+    float gravity;
 };
 
+void update_particle(struct Particle *p){
+
+        p->x += p->velocity_x;
+        p->y += p->velocity_y;
+        p->y += p->gravity;
+
+        if (p->x > 800 || p->x < 0){
+            p->velocity_x = -p->velocity_x;
+        }
+        if (p->y > 450 || p->y < 0){
+            p->velocity_y = -p->velocity_y;
+        }
+}
+
+void setup(struct Particle *p){
+        p->x = rand() % 800;
+        p->y = rand() % 450;
+        p->velocity_y = (rand() % 5) - 2;
+        p->velocity_x = (rand() % 5) - 2;
+        p->gravity = 0.1;        
+ 
+}
 
 int main(void){
+    srand(time(NULL));
 
-    struct Particle particle[100];
+    struct Particle *particle = malloc(particle_count * sizeof(struct Particle));
 
-    for (int i=0; i<100; i++){
-        particle[i].x = rand() % 800;
-        particle[i].y = rand() % 450;
-        particle[i].velocity_y = (rand() % 5) - 2;
-        particle[i].velocity_x = (rand() % 5) - 2;
- 
-    };
+    if (particle== NULL){
+        return 1;
+    }
+
+    for (int i=0; i<particle_count; i++){
+        setup(&particle[i]);
+   };
 
     InitWindow(800, 450, "2D Particle Simulator");
 
     while(!WindowShouldClose()){
 
+        for (int i=0; i<particle_count; i++){
+        update_particle(&particle[i]);
+        }
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        for (int i=0; i<100; i++){
-        particle[i].x += particle[i].velocity_x;
-        particle[i].y += particle[i].velocity_y;
 
-        if (particle[i].x > 800 || particle[i].x < 0){
-            particle[i].velocity_x = -particle[i].velocity_x;
+        for (int i=0; i<particle_count; i++){
+        DrawCircle(particle[i].x, particle[i].y, 10, RED);
         }
-        if (particle[i].y > 450 || particle[i].y < 0){
-            particle[i].velocity_y = -particle[i].velocity_y;
-        }
-
-        DrawCircle(particle[i].x,particle[i].y, 20, RED);
-
-    }
         EndDrawing(); 
-    }
+
+}
     CloseWindow();
+    free(particle);
     return 0;
 }
